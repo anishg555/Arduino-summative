@@ -49,6 +49,21 @@ void HAL_setupGPIO();
 #define button2Released       (PINC & rightSwitch)
 #define button2Pressed        !button2Released
 
+//bool init_module1_clock;
+
+typedef enum
+{
+  NOT_PRESSED,
+  PARTIAL_PRESS,
+  DEBOUNCED_PRESS
+} switch_state_t;
+
+#define debounce  500         // debounce duration
+
+//switch_state_t    B1_state;   // buttons state variables
+
+void HAL_buttonPressed();
+
 #define LATCH                 B00100000
 #define CLOCK                 B00010000
 #define DATA                  B00000001

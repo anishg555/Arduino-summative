@@ -1,57 +1,20 @@
-#include "hal.h"
+#ifdef WE_WANT_TO_DELETE_THIS
+
+
+#include "trafficLights.h"
+#include <Arduino.h>
 #include "Concurrent.h"
-#include "TrafficLights.h"
-#include "Heartbeat.h"
 
-
-TrafficLights Lights;
-Heartbeat Heartbeat;
-
-void setup() {
-  // put your setup code here, to run once:
-  DDRD |= 0b11111100;
-//  init_module0_clock = true;
-//  init_module1_clock = true;
-  Serial.begin(9600);
-
-  Lights.setRunning(true);
-  Heartbeat.setRunning(true);
+trafficLights::trafficLights()
+{
+  module_delay = 2000;
+  
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-  {
-
-    Lights.process();
-    Heartbeat.process();
-
-    /*static unsigned long moduleTime, moduleDelay;
-      static bool moduleStep;
-      static unsigned char lightsState;
-      static unsigned char priority; // 0 = equal, 1 = set 1, 2 = set 2
-
-      if (init_module0_clock) {
-      moduleTime = millis();
-      moduleStep = false;
-      init_module0_clock = false;
-      lightsState = 0;
-      priority = 0;
-      }
-      else {
-      unsigned long m = millis();
-
-      //if the module time exceeds the max delay, move on
-      if ((m - moduleTime) > moduleDelay) {
-        moduleTime = m;
-        moduleStep = true;
-      }
-      else {
-        moduleStep = false;
-      }
-      }
-
-      if (moduleStep)
-      {
+void trafficLights::runLights()
+{
+  if (moduleStep)
+    {
       switch(lightsState)
       {
         case 0:
@@ -140,6 +103,7 @@ void loop() {
           lightsState = 1;
           break;
       }
-      }*/
-  }
+    }
 }
+
+#endif
