@@ -1,11 +1,3 @@
-/************************************************************/
-/* TrafficLights.h                                             */
-/*                                                          */
-/* Class library for blinking the RED LED.                  */
-/*                                                          */
-/* ENGD2103, November 2022                                  */
-/************************************************************/
-
 #include "TrafficLights.h"
 #include "hal.h"
 

@@ -1,11 +1,3 @@
-/************************************************************/
-/* TrafficLights.h                                             */
-/*                                                          */
-/* Class library for blinking the RED LED.                  */
-/*                                                          */
-/* ENGD2103, November 2022                                  */
-/************************************************************/
-
 #ifndef _TrafficLights_h_
 #define _TrafficLights_h_
 
@@ -14,11 +6,10 @@
 
 class TrafficLights : public Concurrent {
   public:
-    void             process();
+    void process();
     TrafficLights();
-
   private:
-    int              state;
+    int state;
 };
 
 #endif

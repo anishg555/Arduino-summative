@@ -13,12 +13,11 @@
 
 
 class Template : public Concurrent {
-  public:
-    void             process();
-    Template();
-
   private:
-    int              state;
+    int state;
+  public:
+    void process();
+    Template();
 };
 
 #endif

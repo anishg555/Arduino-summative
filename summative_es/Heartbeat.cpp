@@ -38,15 +38,17 @@ void Heartbeat::process()
   {
     switch(state){
       case 0:
-        PORTB |= dot;
-        module_delay = 400;
+        writeToShiftRegister(dot);
+        module_delay = 270;
         state = 1;
         break;
       case 1:
-        PORTB &= ~dot;
-        module_delay = 400;
+        writeToShiftRegister(B00000000);
+        module_delay = 270;
         state = 0;
         break;
+      default:
+        state = 0;
         
     }
   }

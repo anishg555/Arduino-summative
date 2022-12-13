@@ -21,14 +21,14 @@ void HAL_setupGPIO()
 //  DDRC &= ~rightSwitch;
 //  PORTC |= rightSwitch;
 //
-//  DDRB &= ~DATA;
-//  DDRB &= ~CLOCK;
-//  DDRB &= ~LATCH;
+  DDRB &= ~DATA;
+  DDRB &= ~CLOCK;
+  DDRB &= ~LATCH;
 }
 
-void HAL_buttonPressed()
-{
-//  { // module 1
+//void HAL_buttonPressed()
+//{
+//    { // module 1
 //    static unsigned long module_time, module_delay;
 //    static unsigned long debounce_count;
 //    static bool module_doStep;
@@ -75,7 +75,7 @@ void HAL_buttonPressed()
 //      B1_state = state;
 //    }
 //  }
-    
+//    
 //  {
 //    static switch_state_t   old;
 //    if (old != B1_state)
@@ -94,18 +94,18 @@ void HAL_buttonPressed()
 //      }
 //    }
 //  }
-}
+//}
 
 void HAL_toggleLatch()
 {
-  DDRB |= LATCH;
-  DDRB &= ~LATCH;
+  PORTB |= LATCH;
+  PORTB &= ~LATCH;
 }
 
 void HAL_toggleClock()
 {
-  DDRB |= CLOCK;
-  DDRB &= ~CLOCK;
+  PORTB |= CLOCK;
+  PORTB &= ~CLOCK;
 }
 
 void writeToShiftRegister(byte value)
@@ -116,11 +116,11 @@ void writeToShiftRegister(byte value)
   {
     if (value & mask)
     {
-      DDRB |= DATA;
+      PORTB |= DATA;
     }
     else
     {
-      DDRB &= ~DATA;
+      PORTB &= ~DATA;
     }
     HAL_toggleClock();
     mask = mask >> 1;
