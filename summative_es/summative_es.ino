@@ -13,7 +13,7 @@ void setup() {
   DDRD |= 0b11111100;
   DDRB |= 0b00110001;
   DDRC |= 0b00000011;
-  init_module1_clock = true;
+  //init_module1_clock = true;
   Serial.begin(9600);
 
   Lights.setRunning(true);
