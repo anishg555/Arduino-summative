@@ -11,6 +11,8 @@ Button2::Button2()
   module_delay = 500; // Default delay is 500ms
   button2State = 0; // The default state is
   init_module2_clock = true;
+  modeState = 0;
+  modeNumber = 1;
 }
 
 void Button2::process()
@@ -66,8 +68,31 @@ void Button2::process()
         switch (old)
         {
           case DEBOUNCED_PRESS:
-            Serial.println("B2 = debounced");
-            Serial.println(modeState);
+            switch (modeState) {
+              case 0:
+                modeNumber = 2;
+                modeState = 1;
+                break;
+              case 1:
+                modeNumber = 3;
+                modeState = 2;
+                break;
+              case 2:
+                modeNumber = 4;
+                modeState = 3;
+                break;
+              case 3:
+                modeNumber = 5;
+                modeState = 4;
+                break;
+              case 4:
+                modeNumber = 1;
+                modeState = 5;
+                break;
+              default:
+                modeNumber = 1;
+                modeState = 0;
+            }
             break;
         }
       }

@@ -8,7 +8,7 @@ class Button2 : public Concurrent {
   private:
     int button2State;
     bool init_module2_clock;
-    
+    int modeState;
     typedef enum
     {
       NOT_PRESSED,
@@ -21,7 +21,7 @@ class Button2 : public Concurrent {
   public:
     void process();
     Button2();
-    int modeState;
+    int modeNumber;
 };
 
 #endif
