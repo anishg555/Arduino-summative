@@ -51,15 +51,7 @@ void HAL_setupGPIO();         // Setup function for the HAL
 #define button2Released       (PINC & rightSwitch)
 #define button2Pressed        !button2Released
 
-//bool init_module1_clock;
-
-/*Typedef for the button press states*/
-
-#define debounce  500         // debounce duration
-
-//switch_state_t    B1_state;   // buttons state variables
-
-//void HAL_buttonPressed();
+#define debounce              300
 
 /*Defines the output pins for the shift register*/
 #define LATCH                 B00100000
@@ -93,6 +85,7 @@ void HAL_setupGPIO();         // Setup function for the HAL
 #define charD                 (B|G|E|D|C)
 #define charE                 (A|F|G|E|D)
 #define charF                 (A|F|G|E)
+#define charT                 (F|E|D|G)
 
 void HAL_toggleLatch();       // Pulls latch high and then low again
 

@@ -6,22 +6,24 @@
 /*Button counter class, inherited from Concurrent*/
 class Button2 : public Concurrent {
   private:
-    int button2State;
-    bool init_module2_clock;
-    int modeState;
+    /*Defining the different button states, only available for class members*/
     typedef enum
     {
-      NOT_PRESSED,
-      PARTIAL_PRESS,
-      DEBOUNCED_PRESS
+      NOT_PRESSED2,
+      PARTIAL_PRESS2,
+      DEBOUNCED_PRESS2
     } switch_state_t2;
-
+  
     switch_state_t2    B2_state;
     
   public:
+    /*Functions, available globally*/
     void process();
     Button2();
-    int modeNumber;
+   
+    /*Variables, available globally*/
+    int selectState;
+    bool init_module2_clock;
 };
 
 #endif

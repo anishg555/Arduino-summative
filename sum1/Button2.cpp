@@ -8,94 +8,77 @@
 Button2::Button2()
 {
   isRunning = false; // The button counter is deactivated by default
-  module_delay = 500; // Default delay is 500ms
-  button2State = 0; // The default state is
-  init_module2_clock = true;
-  modeState = 0;
-  modeNumber = 1;
+  selectState = 0;   // The default state is 0;
 }
 
 void Button2::process()
 {
   static unsigned long debounce_count;
+  static switch_state_t2 state;
 
-  {
-    if (init_module2_clock) {
+  /*Inititalisation before the clock is turned off, defaults to not pressed*/
+  if (init_module2_clock) {
       module_delay = 15;
-      module_time = millis();
-      module_doStep = false;
-      init_module2_clock = false;
-      button2State = NOT_PRESSED;
+      module_time=millis();
+      module_doStep=false;
+      init_module2_clock=false;
+      state= NOT_PRESSED2;
     }
+    /*If it is pressed with the clock off, a step is taken*/
     else {
-      unsigned long m = millis();
+      unsigned long m=millis();
       if ( ( (long)(m - module_time) ) > module_delay ) {
         module_time = m; module_doStep = true;
       }
       else module_doStep = false;
     }
-
+    
+    /*Debounce setup*/
     if (module_doStep) {
-      switch (button2State) {
-        case NOT_PRESSED:
-          if (button2Released) button2State = NOT_PRESSED;
-          else {
-            debounce_count = millis();
-            button2State = PARTIAL_PRESS;
-          }
-          break;
-        case PARTIAL_PRESS:
-          if (button2Released) button2State = NOT_PRESSED;
-          else if ((millis() - debounce_count) < debounce) button2State = PARTIAL_PRESS;
-          else button2State = DEBOUNCED_PRESS;
-          break;
-        case DEBOUNCED_PRESS:
-          if (button2Released) button2State = NOT_PRESSED;
-          else button2State = DEBOUNCED_PRESS;
-          break;
-
-        default:
-          button2State = NOT_PRESSED;
-          break;
-      }
-      B2_state = button2State;
-    }
-    {
-      static switch_state_t2   old;
-      if (old != B2_state)
-      {
-        old = B2_state;
-        switch (old)
-        {
-          case DEBOUNCED_PRESS:
-            switch (modeState) {
-              case 0:
-                modeNumber = 2;
-                modeState = 1;
-                break;
-              case 1:
-                modeNumber = 3;
-                modeState = 2;
-                break;
-              case 2:
-                modeNumber = 4;
-                modeState = 3;
-                break;
-              case 3:
-                modeNumber = 5;
-                modeState = 4;
-                break;
-              case 4:
-                modeNumber = 1;
-                modeState = 5;
-                break;
-              default:
-                modeNumber = 1;
-                modeState = 0;
+      switch(state){
+          case NOT_PRESSED2: 
+            if (button2Released) state= NOT_PRESSED2;
+            else {
+              debounce_count = millis();
+              state= PARTIAL_PRESS2;
             }
             break;
-        }
+          case PARTIAL_PRESS2: 
+            if (button2Released) state= NOT_PRESSED2;
+            else if ((millis()-debounce_count) < debounce) state= PARTIAL_PRESS2;
+            else state= DEBOUNCED_PRESS2;
+            break;
+          case DEBOUNCED_PRESS2: 
+            if (button2Released) state= NOT_PRESSED2;
+            else state= DEBOUNCED_PRESS2;
+            break;
+          
+          default: 
+            state= NOT_PRESSED2; 
+            break;
+      }  
+      B2_state = state;
+    }
+  
+    
+  {
+    static switch_state_t2   old;
+    if (old != B2_state)
+    {
+      old = B2_state;
+      
+      /*If the press passes the debounce time, the state is changed*/
+      switch(old)
+      {
+      case DEBOUNCED_PRESS2:
+        selectState++;
+        if (selectState > 4) selectState = 0;     // Return to 0 after the final state
+        Serial.print("The current state is ");
+        Serial.println(selectState);
+        break;
+      case PARTIAL_PRESS2:                        // Do nothing if the press is partial
+        break;
+      }
       }
     }
-  }
-}
+ }
